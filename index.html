@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LunarSMP - Minecraft Server</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+* {margin:0; padding:0; box-sizing:border-box;}
+body {font-family:'Press Start 2P', cursive; background:#0a0c19; color:#fff; overflow-x:hidden;}
+header {position:relative; height:520px; background:url('assets/hero.png') center/cover no-repeat; display:flex; align-items:center; justify-content:center; overflow:hidden;}
+header::after{content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.55));}
+header h1{position:relative; z-index:1; font-size:0;}
+
+.container {max-width:1200px; margin:-120px auto 0 auto; padding:0 20px; display:flex; flex-wrap:wrap; justify-content:center; gap:30px;}
+.server-card{background: rgba(255,255,255,0.06); backdrop-filter: blur(14px); border-radius:22px; border:1px solid rgba(255,204,0,0.25); padding:32px; min-width:300px; max-width:420px; text-align:center; box-shadow:0 10px 30px rgba(255,204,0,0.28); transition: transform 0.5s, box-shadow 0.5s; animation:fadeUp 1s ease forwards;}
+.server-card:hover {transform:translateY(-10px) scale(1.03); box-shadow:0 18px 48px rgba(255,204,0,0.6);}
+.server-card h2 {color:#ffcc00; font-size:2em; margin-bottom:18px; text-shadow:2px 2px 8px #000;}
+.server-card p {margin:10px 0; font-size:0.9em;}
+.status-online {color:#4CAF50; font-weight:bold;}
+.status-offline {color:#f44336; font-weight:bold;}
+#players-online {font-weight:bold; font-size:1.2em; color:#60e7ff;}
+.btn-join{display:inline-block;margin-top:14px;padding:14px 30px;font-size:1em;color:#0a0c19;background:#ffcc00;border-radius:14px;text-decoration:none;transition: all 0.5s;box-shadow:0 0 18px #ffcc00;}
+.btn-join:hover{background:#ffd633; transform:scale(1.06) rotate(-1.2deg); box-shadow:0 0 36px #ffcc00, 0 0 54px #ffcc00 inset;}
+
+.player-list{margin-top:18px; display:flex; flex-wrap:wrap; justify-content:center; gap:10px;}
+.player{width:40px; height:40px; border-radius:50%; border:2px solid #ffcc00; overflow:hidden;}
+
+.news{background: rgba(255,255,255,0.06); backdrop-filter:blur(14px); border-radius:18px; padding:22px; max-width:900px; margin:40px auto;}
+.news h3{color:#ffcc00; margin-bottom:12px;}
+.news p{font-size:0.9em; margin-bottom:8px;}
+
+footer{padding:18px; background:rgba(0,0,0,0.82); font-size:0.85em; color:#cfcfcf; text-align:center; margin-top:46px;}
+
+@keyframes fadeUp {0%{opacity:0; transform:translateY(40px);}100%{opacity:1; transform:translateY(0);}}
+@media(max-width:768px){header{height:360px;} .server-card{min-width:92%;}}
+</style>
+</head>
+<body>
+
+<header><h1>LunarSMP</h1></header>
+
+<div class="container">
+  <div class="server-card">
+    <h2>LunarSMP</h2>
+    <p>IP Server: <strong>mbasic7.pikamc.vn:25219</strong></p>
+    <p>Trạng thái server: <span id="server-status">Đang kiểm tra...</span></p>
+    <p>Người chơi online: <span id="players-online">Đang tải...</span></p>
+    <div class="player-list" id="player-list"></div>
+    <a href="minecraft://mbasic7.pikamc.vn:25219" class="btn-join">Tham gia Server</a>
+  </div>
+</div>
+
+<div class="news">
+  <h3>Tin tức & Sự kiện</h3>
+  <div id="newsList"></div>
+</div>
+
+<footer>&copy; 2025 LunarSMP. All rights reserved.</footer>
+
+<script>
+async function checkServerStatus(){
+  try{
+    const res=await fetch('https://api.mcsrvstat.us/2/mbasic7.pikamc.vn:25219');
+    const data=await res.json();
+    const status=document.getElementById('server-status');
+    const players=document.getElementById('players-online');
+    const playerList=document.getElementById('player-list');
+    playerList.innerHTML='';
+    if(data.online){
+      status.textContent='Online'; status.className='status-online';
+      const onlineCount=data.players?.online||0;
+      players.textContent=onlineCount+' người';
+      if(data.players?.list){
+        data.players.list.forEach(name=>{
+          const img=document.createElement('img');
+          img.src=`https://minotar.net/avatar/${name}/40.png`;
+          img.className='player';
+          playerList.appendChild(img);
+        });
+      }
+    }else{
+      status.textContent='Offline'; status.className='status-offline';
+      players.textContent='0 người';
+    }
+  }catch(e){
+    document.getElementById('server-status').textContent='Không thể kết nối';
+    document.getElementById('server-status').className='status-offline';
+    document.getElementById('players-online').textContent='0 người';
+  }
+}
+checkServerStatus(); setInterval(checkServerStatus,60000);
+
+async function loadNews(){
+  const newsList=document.getElementById('newsList');
+  try{
+    const res=await fetch('/api/news');
+    const news=await res.json();
+    if(news.length===0){ newsList.innerHTML='<p>Chưa có tin tức</p>'; }
+    else{ newsList.innerHTML=news.map((n,i)=>`<p>[${i+1}] ${n}</p>`).join(''); }
+  }catch(e){
+    newsList.innerHTML='<p>Lỗi tải tin tức</p>';
+  }
+}
+loadNews();
+</script>
+
+</body>
+</html>
