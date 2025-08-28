@@ -1,81 +1,619 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LunarSMP - Minecraft Server</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>LunarisSMP — Landing</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
-/* ... toàn bộ CSS bạn dán ở trên ... */
+/* -------------------------
+   LunarSMP - Epic Landing
+   HTML + CSS + JS standalone
+   Admin key: 12345 (default)
+   ------------------------- */
+
+/* Reset */
+:root{
+  --bg-1: #071024;
+  --bg-2: #071b2e;
+  --accent: #ffd54f;
+  --accent-2: #7c3aed;
+  --muted: #9aa5b1;
+  --glass: rgba(255,255,255,0.04);
+  --glass-2: rgba(255,255,255,0.02);
+  --card: rgba(255,255,255,0.03);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body,#root{height:100%}
+body{
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: radial-gradient(1200px 500px at 10% 10%, rgba(124,58,237,0.12), transparent 6%),
+              radial-gradient(1000px 400px at 90% 90%, rgba(34,197,94,0.06), transparent 8%),
+              linear-gradient(180deg,var(--bg-1),var(--bg-2));
+  color: #e6eef6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+
+/* Container */
+.container{max-width:1200px;margin:0 auto;padding:28px;}
+
+/* Top navigation */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:18px 6px;
+}
+.brand{
+  display:flex;align-items:center;gap:14px;
+}
+.logo{
+  width:58px;height:58px;border-radius:12px;
+  background:linear-gradient(135deg,var(--accent),#ff8a65);
+  display:inline-flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 24px rgba(0,0,0,0.6), inset 0 -6px 24px rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.06);
+}
+.logo svg{width:34px;height:34px;filter:drop-shadow(0 6px 18px rgba(0,0,0,0.45));}
+.brand h1{font-size:18px;font-weight:800;letter-spacing:0.6px}
+.brand p{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* Nav links */
+.navlinks{display:flex;gap:12px;align-items:center}
+.navlinks a{
+  padding:10px 14px;border-radius:10px;color:inherit;text-decoration:none;font-weight:600;font-size:13px;
+}
+.navlinks a:hover{background:linear-gradient(90deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));transform:translateY(-3px)}
+.join-btn{background:linear-gradient(90deg,var(--accent),#ffb86b);color:#081220;padding:10px 16px;border-radius:12px;font-weight:800;box-shadow:0 10px 30px rgba(255,170,80,0.08);}
+
+/* Hero */
+.hero{
+  margin-top:18px;border-radius:18px;overflow:hidden;position:relative;
+  background-image:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.03);
+  box-shadow:0 30px 80px rgba(2,6,23,0.6);
+  display:grid;grid-template-columns:1fr 420px;gap:0;align-items:stretch;
+  min-height:420px;
+}
+.hero-left{
+  padding:48px 48px 56px 48px;display:flex;flex-direction:column;justify-content:center;gap:18px;
+  position:relative;
+}
+.headline{
+  font-size:44px;font-weight:900;line-height:1.02;color:#fff;text-shadow:0 12px 48px rgba(0,0,0,0.6);
+}
+.sub{
+  color:var(--muted);font-size:15px;max-width:760px;margin-top:6px;
+}
+.hero-cta{display:flex;gap:12px;margin-top:18px;align-items:center}
+.btn{
+  padding:12px 18px;border-radius:12px;font-weight:800;border:none;cursor:pointer;font-size:14px;
+  display:inline-flex;align-items:center;gap:10px;letter-spacing:0.3px;
+}
+.btn.primary{
+  background:linear-gradient(90deg,var(--accent),#ff8a65);color:#071024;box-shadow:0 12px 30px rgba(255,150,60,0.12);
+}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--accent);}
+
+/* info card on hero */
+.info-card{
+  margin-top:18px;padding:16px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:12px;display:flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,0.03);
+}
+.info-card .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(90deg,#66ffa6,#00c2a8);box-shadow:0 8px 18px rgba(0,195,168,0.12)}
+.info-card p{font-size:13px;color:var(--muted)}
+
+/* hero-right - server preview */
+.hero-right{
+  padding:26px;border-left:1px solid rgba(255,255,255,0.02);display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));
+}
+.server-card{
+  width:100%;max-width:340px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 16px 46px rgba(2,8,23,0.6);
+}
+.server-card h3{font-size:18px;color:var(--accent);font-weight:800;margin-bottom:6px}
+.server-card p{color:var(--muted);font-size:13px}
+.server-ip{font-family:monospace;font-weight:800;color:#fff;background:linear-gradient(90deg,#00000020,#ffffff06);padding:8px 10px;border-radius:8px;margin-top:10px;display:inline-block}
+.server-stats{display:flex;gap:8px;margin-top:12px}
+.stat{background:var(--glass);padding:8px;border-radius:10px;min-width:90px;text-align:center;border:1px solid rgba(255,255,255,0.02)}
+.stat strong{display:block;font-size:16px;color:#fff}
+
+/* announcement banner */
+.announce{
+  margin-top:18px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,#ffefc3,#fff3e0);color:#07060a;font-weight:700;border:1px solid rgba(0,0,0,0.06);
+  display:flex;gap:12px;align-items:center;justify-content:space-between;
+}
+.announce small{color:#6b4b00;font-weight:600;font-size:13px}
+
+/* sections */
+.section{margin-top:30px;padding:36px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.02)}
+.section h2{font-size:20px;color:var(--accent);font-weight:800;margin-bottom:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 30px rgba(2,8,23,0.5);
+}
+.card h4{font-weight:800;color:#fff;margin-bottom:8px}
+.card p{color:var(--muted);font-size:13px}
+
+/* gallery */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.thumb{height:120px;border-radius:10px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03);box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)}
+
+.rules{display:flex;flex-direction:column;gap:8px}
+.rule{display:flex;align-items:flex-start;gap:12px;background:var(--glass);padding:10px;border-radius:10px}
+
+/* admin panel modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:flex;align-items:center;justify-content:center;z-index:60;backdrop-filter: blur(4px)}
+.modal{width:820px;max-width:96%;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03)}
+.form-row{display:flex;gap:10px;margin-top:10px}
+.input, textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;font-size:14px;outline:none}
+.small{width:160px;flex:0 0 160px}
+
+/* footer */
+.footer{margin-top:40px;padding:16px;text-align:center;color:var(--muted);font-size:13px}
+
+/* tiny helpers */
+.kv{font-weight:700;color:#fff}
+.pulse{animation:pulse 2s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+
+/* responsive */
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;min-height:720px}
+  .hero-right{order:2}
+  .hero-left{order:1;padding:28px}
+  .grid3{grid-template-columns:repeat(1,1fr)}
+  .gallery{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:540px){
+  .headline{font-size:28px}
+  .hero{min-height:640px}
+  .logo{width:48px;height:48px}
+  .logo svg{width:28px;height:28px}
+  .brand h1{font-size:16px}
+}
 </style>
 </head>
 <body>
-
-<header><h1>LunarisSMP</h1></header>
-
 <div class="container">
-  <div class="server-card">
-    <h2>LunarisSMP</h2>
-    <p>IP Server: <strong>mbasic7.pikamc.vn:25219</strong></p>
-    <p>Trạng thái server: <span id="server-status">Đang kiểm tra...</span></p>
-    <p>Người chơi online: <span id="players-online">Đang tải...</span></p>
-    <div class="player-list" id="player-list"></div>
-    <a href="minecraft://mbasic7.pikamc.vn:25219" class="btn-join">Tham gia Server</a>
+
+  <!-- NAV -->
+  <div class="nav" role="navigation" aria-label="Main Navigation">
+    <div class="brand" title="LunarisSMP">
+      <div class="logo" aria-hidden="true">
+        <!-- simple moon icon -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#fff" opacity="0.95"/>
+        </svg>
+      </div>
+      <div>
+        <h1>LunarisSMP</h1>
+        <p>Server SMP • 1.21+ • 24/7</p>
+      </div>
+    </div>
+
+    <div class="navlinks" role="menubar">
+      <a class="btn ghost" href="#features">Tính năng</a>
+      <a class="btn ghost" href="#gallery">Gallery</a>
+      <a class="btn ghost" href="#rules">Quy tắc</a>
+      <a class="btn ghost" href="#events">Sự kiện</a>
+      <button class="btn primary join-btn" id="joinNow">Tham gia</button>
+    </div>
   </div>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero-left">
+      <div class="headline">Chào mừng đến với <span style="color:var(--accent)">Lunaris</span>SMP</div>
+      <div class="sub">Một server Minecraft SMP thân thiện, cập nhật tính năng thường xuyên, không pay-to-win. Xây dựng, khám phá, tham gia sự kiện và chiến đấu cùng cộng đồng!</div>
+
+      <div class="hero-cta">
+        <button class="btn primary" id="copyIpBtn">📋 Copy IP</button>
+        <button class="btn ghost" id="openAdminBtn">🔒 Admin</button>
+      </div>
+
+      <div class="info-card" style="margin-top:14px;">
+        <div>
+          <div style="font-weight:800;color:#fff">IP: <span class="server-ip">mbasic7.pikamc.vn:25219</span></div>
+          <p style="margin-top:8px">Chơi ngay trên phiên bản <span class="kv">1.21+</span> • Hoạt động <strong>24/7</strong></p>
+        </div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-size:12px;color:var(--muted)">Vote để nhận thưởng</div>
+          <button class="btn primary" style="margin-top:8px" id="voteBtn">Vote</button>
+        </div>
+      </div>
+
+      <div class="announce" id="announcementBanner" style="margin-top:18px;">
+        <div>
+          <strong>Thông báo:</strong>
+          <small id="announcementText">Chưa có thông báo — đăng nhập Admin để tạo thông báo</small>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <small style="color:#6b4b00">Server hoạt động ổn định</small>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-right" aria-label="Server Card">
+      <div class="server-card">
+        <h3>Thông tin Server</h3>
+        <p>Bạn có thể kết nối ngay bằng client Minecraft hoặc copy IP để chia sẻ.</p>
+        <div class="server-ip" style="margin-top:10px">mbasic7.pikamc.vn:25219</div>
+
+        <div class="server-stats">
+          <div class="stat">
+            <small style="color:var(--muted)">Trạng thái</small>
+            <strong id="statusDot">Đang kiểm tra</strong>
+          </div>
+          <div class="stat">
+            <small style="color:var(--muted)">Online</small>
+            <strong id="playerCount">--</strong>
+          </div>
+          <div class="stat">
+            <small style="color:var(--muted)">Max slot</small>
+            <strong id="playerMax">--</strong>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;display:flex;gap:8px">
+          <button class="btn ghost" id="openDiscord">Discord</button>
+          <button class="btn ghost" id="openStore">Cửa hàng</button>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;width:100%;max-width:340px">
+        <div class="card" style="display:flex;gap:12px;align-items:center">
+          <div style="width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,#00bfa5,#33e0ff);display:flex;align-items:center;justify-content:center;font-weight:800;color:#022;box-shadow:0 8px 24px rgba(3,63,80,0.12)">VIP</div>
+          <div>
+            <div style="font-weight:800;color:#fff">Gói hỗ trợ</div>
+            <div style="color:var(--muted);font-size:13px;margin-top:4px">Ủng hộ server để nhận perks độc quyền</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="section" aria-label="Features">
+    <h2>Tính năng nổi bật</h2>
+    <div class="grid3">
+      <div class="card">
+        <h4>🌲 Sinh tồn nâng cao</h4>
+        <p>Hệ thống kinh tế, trade, và bảo vệ land giúp trải nghiệm sinh tồn trở nên sâu sắc hơn.</p>
+      </div>
+      <div class="card">
+        <h4>⚔️ PvP cân bằng</h4>
+        <p>Hệ thống đấu PvP thân thiện với vật phẩm cân bằng, sân đấu và xếp hạng.</p>
+      </div>
+      <div class="card">
+        <h4>🎉 Sự kiện thường xuyên</h4>
+        <p>Sự kiện hàng tuần, quà và leaderboard hấp dẫn cho cộng đồng tích cực.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="section" aria-label="Gallery">
+    <h2>Hình ảnh server</h2>
+    <div class="gallery" id="galleryGrid" aria-hidden="false">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=800&q=60')"></div>
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=60')"></div>
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60')"></div>
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1526318472351-c75fcf070b6d?auto=format&fit=crop&w=800&q=60')"></div>
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1508873696983-2dfd5898f8e9?auto=format&fit=crop&w=800&q=60')"></div>
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=800&q=60')"></div>
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=60')"></div>
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1536661101316-0c6d5a8b6d3b?auto=format&fit=crop&w=800&q=60')"></div>
+    </div>
+  </section>
+
+  <!-- RULES -->
+  <section id="rules" class="section" aria-label="Rules">
+    <h2>Quy tắc cơ bản</h2>
+    <div class="rules">
+      <div class="rule card"><strong>1.</strong> Không grief — tôn trọng khu vực người chơi khác.</div>
+      <div class="rule card"><strong>2.</strong> Không sử dụng hack/cheat — phát hiện sẽ bị ban.</div>
+      <div class="rule card"><strong>3.</strong> Không lăng mạ, phân biệt đối xử.</div>
+      <div class="rule card"><strong>4.</strong> Tôn trọng staff và tuân theo quyết định của họ.</div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section id="events" class="section" aria-label="Events">
+    <h2>Sự kiện & Tin nóng</h2>
+    <div class="card" style="display:flex;flex-direction:column;gap:12px">
+      <div>
+        <strong>• Sự kiện Khai Mở Mùa 2025</strong>
+        <p style="color:var(--muted);margin-top:6px">Tham gia để nhận phần thưởng giới hạn — check Discord để biết chi tiết.</p>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div style="flex:1;min-width:220px">
+          <div style="font-weight:800">Sự kiện 1</div>
+          <p style="color:var(--muted);margin-top:6px">Treasure Hunt — tìm kho báu trên map và nhận thưởng.</p>
+        </div>
+        <div style="flex:1;min-width:220px">
+          <div style="font-weight:800">Sự kiện 2</div>
+          <p style="color:var(--muted);margin-top:6px">PvP Tournament — đăng ký để thi đấu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADMIN KEY & ADMIN PANEL -->
+  <section class="section" aria-label="Admin">
+    <h2>Admin — Nhập mã để chỉnh thông báo</h2>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <input id="adminKeyInput" class="input small" placeholder="Nhập mã Admin (VD: 12345)" aria-label="admin key" />
+      <button id="unlockBtn" class="btn primary">Mở quyền chỉnh sửa</button>
+      <div style="flex:1;color:var(--muted);font-size:13px">Sau khi mở, bạn có thể sửa thông báo hiển thị ở banner phía trên.</div>
+    </div>
+    <div style="margin-top:12px;color:var(--muted);font-size:13px">Lưu ý: Đây là demo admin cục bộ — không an toàn cho môi trường production.</div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" aria-label="Contact">
+    <h2>Liên hệ & Hỗ trợ</h2>
+    <div style="display:flex;gap:18px;flex-wrap:wrap">
+      <div style="flex:1;min-width:280px" class="card">
+        <h4>Discord</h4>
+        <p style="color:var(--muted);margin-top:6px">Tham gia Discord để được hỗ trợ nhanh chóng và kết nối cộng đồng.</p>
+        <button class="btn primary" id="discordBtn" style="margin-top:10px">Mở Discord</button>
+      </div>
+      <div style="flex:1;min-width:280px" class="card">
+        <h4>Góp ý</h4>
+        <p style="color:var(--muted);margin-top:6px">Gửi ý kiến, báo lỗi, hoặc yêu cầu tính năng qua Discord hoặc email.</p>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <input id="feedbackInput" class="input" placeholder="Góp ý của bạn..." />
+          <button class="btn ghost" id="sendFeedback">Gửi</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">© <span id="year"></span> LunarisSMP — Built with ❤️</div>
+
 </div>
 
-<div class="news">
-  <h3>Tin tức & Sự kiện</h3>
-  <div id="newsList"></div>
-</div>
-
-<footer>&copy; 2025 LunarSMP. All rights reserved.</footer>
+<!-- Modal template (hidden) -->
+<div id="modalRoot" style="display:none"></div>
 
 <script>
-async function checkServerStatus(){
-  try{
-    const res=await fetch('https://api.mcsrvstat.us/2/mbasic7.pikamc.vn:25219');
-    const data=await res.json();
-    const status=document.getElementById('server-status');
-    const players=document.getElementById('players-online');
-    const playerList=document.getElementById('player-list');
-    playerList.innerHTML='';
-    if(data.online){
-      status.textContent='Online'; status.className='status-online';
-      const onlineCount=data.players?.online||0;
-      players.textContent=onlineCount+' người';
-      if(data.players?.list){
-        data.players.list.forEach(name=>{
-          const img=document.createElement('img');
-          img.src=`https://minotar.net/avatar/${name}/40.png`;
-          img.className='player';
-          playerList.appendChild(img);
-        });
-      }
-    }else{
-      status.textContent='Offline'; status.className='status-offline';
-      players.textContent='0 người';
-    }
-  }catch(e){
-    document.getElementById('server-status').textContent='Không thể kết nối';
-    document.getElementById('server-status').className='status-offline';
-    document.getElementById('players-online').textContent='0 người';
-  }
-}
-checkServerStatus(); setInterval(checkServerStatus,60000);
+/* ===========================
+   Client-side JS (self-contained)
+   - Admin key: 12345 (default)
+   - Allows editing announcement, persists to localStorage
+   - Fetches server status via api.mcsrvstat.us
+   - Handles UI interactions
+   =========================== */
 
-async function loadNews(){
-  const newsList=document.getElementById('newsList');
-  try{
-    const res=await fetch('/api/news');
-    const news=await res.json();
-    if(news.length===0){ newsList.innerHTML='<p>Chưa có tin tức</p>'; }
-    else{ newsList.innerHTML=news.map((n,i)=>`<p>[${i+1}] ${n}</p>`).join(''); }
-  }catch(e){
-    newsList.innerHTML='<p>Lỗi tải tin tức</p>';
+(() => {
+  // CONFIG
+  const ADMIN_KEY = "12345"; // change here if needed
+  const DISCORD_URL = "https://discord.gg/umx4j9KS";
+  const SERVER_IP = "mbasic7.pikamc.vn";
+  const SERVER_PORT = 25219;
+  const ANNOUNCEMENT_STORAGE_KEY = "lunaris_announcement_v1";
+
+  // Utils
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => document.querySelectorAll(sel);
+
+  // Fill year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Announcement load / save
+  function loadAnnouncement(){
+    const stored = localStorage.getItem(ANNOUNCEMENT_STORAGE_KEY);
+    if(stored){
+      $('#announcementText').textContent = stored;
+    } else {
+      $('#announcementText').textContent = "Chưa có thông báo — đăng nhập Admin để tạo thông báo";
+    }
   }
-}
-loadNews();
+  function saveAnnouncement(txt){
+    localStorage.setItem(ANNOUNCEMENT_STORAGE_KEY, txt);
+    $('#announcementText').textContent = txt;
+  }
+  loadAnnouncement();
+
+  // Admin unlock handler
+  $('#unlockBtn').addEventListener('click', () => {
+    const key = $('#adminKeyInput').value.trim();
+    if(!key){
+      alert("Nhập mã admin trước đã!");
+      return;
+    }
+    if(key === ADMIN_KEY){
+      openAdminModal();
+    } else {
+      // small shake effect
+      $('#adminKeyInput').animate([
+        { transform: 'translateX(0)' },
+        { transform: 'translateX(-8px)' },
+        { transform: 'translateX(8px)' },
+        { transform: 'translateX(0)' }
+      ], { duration: 360, iterations: 1 });
+      alert("Mã không đúng!");
+    }
+  });
+
+  // Open modal admin panel
+  function openAdminModal(){
+    const modalHtml = `
+      <div class="modal-backdrop" id="adminModal">
+        <div class="modal" role="dialog" aria-modal="true" aria-label="Admin panel">
+          <h3 style="font-weight:900;color:var(--accent)">Admin Panel — Chỉnh sửa thông báo</h3>
+          <div style="margin-top:8px;color:var(--muted)">Bạn đã mở quyền admin cục bộ. Chỉnh sửa nội dung bên dưới và bấm Lưu.</div>
+
+          <div class="form-row" style="margin-top:12px">
+            <input id="adminTitle" class="input small" placeholder="Tiêu đề ngắn (tùy chọn)" />
+            <input id="adminColor" class="input small" placeholder="Màu sắc (CSS) ví dụ: #ffd54f or linear-gradient(...)" />
+          </div>
+
+          <div style="margin-top:10px">
+            <textarea id="adminContent" rows="4" class="input" placeholder="Nội dung thông báo..."></textarea>
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:10px;justify-content:flex-end">
+            <button id="closeAdmin" class="btn ghost">Đóng</button>
+            <button id="saveAdmin" class="btn primary">Lưu & Hiển thị</button>
+          </div>
+
+          <hr style="margin-top:12px;border:none;border-top:1px solid rgba(255,255,255,0.03)" />
+
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
+            <button id="clearAnnouncement" class="btn ghost">Xóa thông báo</button>
+            <button id="copyAnnouncement" class="btn ghost">Sao chép nội dung</button>
+            <button id="previewAnnouncement" class="btn ghost">Preview</button>
+          </div>
+        </div>
+      </div>
+    `;
+    const root = $('#modalRoot');
+    root.innerHTML = modalHtml;
+    root.style.display = "block";
+
+    // Setup existing content
+    $('#adminContent').value = localStorage.getItem(ANNOUNCEMENT_STORAGE_KEY) || '';
+
+    // Handlers
+    $('#closeAdmin').addEventListener('click', closeAdminModal);
+    $('#saveAdmin').addEventListener('click', () => {
+      const txt = $('#adminContent').value.trim();
+      if(!txt){
+        if(!confirm('Bạn có chắc muốn lưu một thông báo trống?')) return;
+      }
+      saveAnnouncement(txt);
+      closeAdminModal();
+      flashAnnounce();
+    });
+    $('#clearAnnouncement').addEventListener('click', () => {
+      if(confirm('Xóa thông báo hiện tại?')){
+        localStorage.removeItem(ANNOUNCEMENT_STORAGE_KEY);
+        loadAnnouncement();
+      }
+    });
+    $('#copyAnnouncement').addEventListener('click', () => {
+      const txt = localStorage.getItem(ANNOUNCEMENT_STORAGE_KEY) || '';
+      navigator.clipboard.writeText(txt).then(()=>alert('Đã copy thông báo!'));
+    });
+    $('#previewAnnouncement').addEventListener('click', () => {
+      const txt = $('#adminContent').value.trim();
+      if(txt){
+        $('#announcementText').textContent = txt;
+        alert('Đã preview (chưa lưu).');
+      } else alert('Nội dung trống.');
+    });
+  }
+
+  function closeAdminModal(){
+    const root = $('#modalRoot');
+    root.innerHTML = '';
+    root.style.display = 'none';
+    loadAnnouncement();
+  }
+
+  function flashAnnounce(){
+    const el = $('#announcementBanner');
+    el.animate([{ transform:'translateY(0)'},{ transform:'translateY(-8px)'},{transform:'translateY(0)'}], { duration:600 });
+  }
+
+  // Copy IP button
+  $('#copyIpBtn').addEventListener('click', () => {
+    const ip = `${SERVER_IP}:${SERVER_PORT}`;
+    navigator.clipboard.writeText(ip).then(()=> {
+      const btn = $('#copyIpBtn');
+      btn.textContent = '✅ Đã copy: ' + ip;
+      setTimeout(()=> btn.textContent = '📋 Copy IP', 2600);
+    }).catch(()=> alert('Không thể copy IP (trình duyệt không cho phép).'));
+  });
+
+  // Vote button
+  $('#voteBtn').addEventListener('click', () => {
+    alert('Cảm ơn! Chuyển hướng tới trang vote (demo).');
+  });
+
+  // Discord button
+  $('#discordBtn').addEventListener('click', () => {
+    window.open(DISCORD_URL, '_blank');
+  });
+
+  $('#openDiscord').addEventListener('click', () => {
+    window.open(DISCORD_URL, '_blank');
+  });
+
+  $('#openStore').addEventListener('click', () => {
+    alert('Mở cửa hàng (demo).');
+  });
+
+  $('#joinNow').addEventListener('click', () => {
+    // try to open minecraft protocol
+    const proto = `minecraft://${SERVER_IP}:${SERVER_PORT}`;
+    window.location.href = proto;
+    // fallback
+    setTimeout(()=> alert(`Nếu client chưa mở, kết nối bằng IP: ${SERVER_IP}:${SERVER_PORT}`), 800);
+  });
+
+  // Feedback send (demo)
+  $('#sendFeedback').addEventListener('click', () => {
+    const txt = $('#feedbackInput').value.trim();
+    if(!txt){ alert('Nhập góp ý'); return; }
+    $('#feedbackInput').value = '';
+    alert('Cảm ơn góp ý — đã gửi (demo).');
+  });
+
+  // Fetch server status (mcsrvstat)
+  async function fetchServerStatus(){
+    try{
+      const res = await fetch(`https://api.mcsrvstat.us/2/${SERVER_IP}:${SERVER_PORT}`);
+      const data = await res.json();
+      if(data && data.online){
+        $('#statusDot').textContent = 'Online';
+        $('#statusDot').style.color = '#9ef99e';
+        $('#playerCount').textContent = (data.players?.online || 0);
+        $('#playerMax').textContent = (data.players?.max || '--');
+        // optional: show player avatars (not in hero)
+      } else {
+        $('#statusDot').textContent = 'Offline';
+        $('#statusDot').style.color = '#ff8a8a';
+        $('#playerCount').textContent = 0;
+        $('#playerMax').textContent = '--';
+      }
+    }catch(e){
+      $('#statusDot').textContent = 'Không thể kết nối';
+      $('#statusDot').style.color = '#ff8a8a';
+      $('#playerCount').textContent = '--';
+      $('#playerMax').textContent = '--';
+    }
+  }
+  // initial
+  fetchServerStatus();
+  setInterval(fetchServerStatus, 60_000);
+
+  // Small gallery lazy hover
+  document.querySelectorAll('.thumb').forEach((t,i) => {
+    t.addEventListener('mouseenter', ()=> t.style.transform='scale(1.03)');
+    t.addEventListener('mouseleave', ()=> t.style.transform='scale(1)');
+    t.style.transition = 'transform 360ms ease';
+  });
+
+  // Keyboard shortcut: press A to open admin (for quick testing)
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'A' || e.key === 'a'){
+      const key = prompt('Nhập mã Admin (phím tắt):');
+      if(key === ADMIN_KEY) openAdminModal();
+      else if(key) alert('Mã không đúng');
+    }
+  });
+
+  // friendly console message
+  console.log("%cLunarisSMP — Developer Console", "color: #ffd54f; font-weight: 900; font-size:14px");
+  console.log("Admin key (demo):", ADMIN_KEY);
+})();
 </script>
 
 </body>
